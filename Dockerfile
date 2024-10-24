@@ -17,7 +17,7 @@
 
 # Use the official lightweight Python image.
 # https://hub.docker.com/_/python
-FROM hca-docker-innersource.repos.medcity.net/containers/base/python-3.12:latest
+FROM python:3.12
 
 # Allow statements and log messages to immediately appear in the logs
 ENV PYTHONUNBUFFERED True
