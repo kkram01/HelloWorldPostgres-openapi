@@ -76,7 +76,7 @@ def connect():
 
 
 
-app = APIFlask(__name__, title='HelloWorld API', version='1.0.0')
+app = APIFlask(__name__, title='HelloWorld API', version='1.0.0', spec_path='/openapi.json') #spec_path field defines the path to the openAPI spec endpoint.
 
 # openapi.info.description
 app.config['DESCRIPTION'] = """
