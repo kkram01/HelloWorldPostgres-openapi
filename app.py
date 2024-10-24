@@ -6,6 +6,7 @@ from flask import jsonify
 from apiflask import APIFlask
 import sqlalchemy
 from sqlalchemy import text
+from flask_swagger_ui import get_swaggerui_blueprint
 
 def config() -> dict:
     """This will create a map of all database config read as environment variables"""
@@ -77,6 +78,17 @@ def connect():
 
 
 app = APIFlask(__name__, title='HelloWorld API', version='1.0.0', spec_path='/openapi.json') #spec_path field defines the path to the openAPI spec endpoint.
+OPENAPI_URL = "/openapi"
+API_URL = "/openapi.json"
+
+swagger_ui_blueprint = get_swaggerui_blueprint(
+    OPENAPI_URL,
+    API_URL,
+    config={
+        'app_name': 'Access API'
+    }
+)
+app.register_blueprint(swagger_ui_blueprint, url_prefix=OPENAPI_URL)
 
 # openapi.info.description
 app.config['DESCRIPTION'] = """
@@ -84,7 +96,7 @@ The description for this API. It can be very long and **Markdown** is supported.
 """
 
 app.config['SERVERS'] = [
-    {'name': 'Development Server', 'url': 'http://localhost:5000'}
+    {'name': 'Development Server', 'url': 'http://localhost:8080'}
 ]
 
 conn=connect()
