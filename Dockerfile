@@ -39,7 +39,11 @@ WORKDIR $APP_HOME
 COPY . ./
 
 # Install production dependencies.
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt \
+    && set -ex \
+    # Create a non-root user
+    && addgroup --system --gid 9000 appgroup \
+    && adduser --system --uid 1001 --gid 9000 --no-create-home appuser \
 RUN chown -Rh ${APP_USER}:${APP_GROUP} /app
 # Run the web service on container startup. Here we use the gunicorn
 # webserver, with one worker process and 8 threads.
